@@ -1,4 +1,7 @@
 
+# given a string s, find the maximum number of operations which can be done
+# operation: if s[i]==s[i+1] and s[i+1]!=s[i+2], replace s[i+2] with s[i]
+
 def findMaxOpsMS(s):
 
     n,res=len(s),0
