@@ -154,6 +154,32 @@
         
 #         return res
 
+# class Solution:
+#     def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+        
+#         n = len(edges)
+#         deg = [0] * (n + 1)
+#         g=defaultdict(list)
+
+#         for u, v in edges:
+#             g[u].append(v);g[v].append(u)
+#             deg[u] += 1;deg[v] += 1
+
+#         q = deque()
+#         for i in range(1, n + 1):
+#             if deg[i] == 1:q.append(i)
+
+#         while q:
+#             u = q.popleft()
+#             deg[u] -= 1
+#             for v in g[u]:
+#                 deg[v] -= 1
+#                 if deg[v] == 1:
+#                     q.append(v)
+
+#         for u, v in reversed(edges):
+#             if deg[u]==deg[v]==2: return [u, v]
+#         return []
 
 class Solution:
     def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
