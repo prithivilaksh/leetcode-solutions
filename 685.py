@@ -66,7 +66,7 @@ class Solution:
             inedge[v]=[u,v]
         
         for u,v in edges:
-            # if [u,v]==e2: continue
+            if [u,v]==e2: continue
             if union(u,v):
                 if e1: return e1 #cycle and cycle due to e1
                 return [u,v] #cycle and cycle due to [u,v]
