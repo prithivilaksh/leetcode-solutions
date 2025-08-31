@@ -1,5 +1,20 @@
 class Solution:
     def score(self, A: List[str], X: str) -> int:
+        # observations:
+        #     - for every card, bucket it as per the left or right char which is different and the cards xx separately
+        #     - for a given set left / right, the maximum pairs is based on the following
+        #             3       
+        #             3
+        #         1   3       1
+        #         1   2       1
+        #         1   2       1
+        #         1   2       1   2
+        #         1   2       1   2
+        #         1   2       1   2
+        #     - if the max is <= tot//2, we can have tot//2 pairs, otherwise we can have tot-max pairs
+        #     - after this we will have remaining from left/right and xx cards
+        #     - after this if we have remaining xx cards, those can be used against exisiting pairs evenly.
+        #     - for e.g if x=b and we have a pair ab,cb and bb,bb these can be paired like ab,bb and cb,bb
         both = 0
         l = defaultdict(int)
         r = defaultdict(int)
