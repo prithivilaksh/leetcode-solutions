@@ -10,14 +10,14 @@ class DLL:
         head,tail=Node(),Node()
         head.next,tail.prev=tail,head
         self.head,self.tail=head,tail
-    
-    def popleft(self):
-        return self.pop(self.head.next)
-    
+
     def pop(self,node):
         prev,next=node.prev,node.next
         prev.next,next.prev=next,prev
         return node
+
+    def popleft(self):
+        return self.pop(self.head.next)
     
     def pushright(self,node):
         tail=self.tail
@@ -41,18 +41,16 @@ class LRUCache:
 
     def put(self, key: int, val: int) -> None:
         if self.get(key)!=-1:
-            node=self.k2n[key]
-            node.val=val
-        else: 
-            self.cap-=1
-            if self.cap<0:
-                self.cap+=1
-                node=self.dll.popleft()
-                del self.k2n[node.key]
-                del node
-            node=Node(key,val)
-            self.k2n[key]=node
-            self.dll.pushright(node)
+            self.k2n[key].val=val;return
+
+        if self.cap==len(self.k2n):
+            node=self.dll.popleft()
+            del self.k2n[node.key]
+            del node
+            
+        node=Node(key,val)
+        self.k2n[key]=node
+        self.dll.pushright(node)
 
 
 # Your LRUCache object will be instantiated and called as such:
