@@ -1,55 +1,52 @@
 class Node:
-    def __init__(self,key=0,val=0,prev=None,next=None):
-        self.key=key
-        self.val=val
-        self.prev=prev
-        self.next=next
+    def __init__(self,k=0,v=0,prev=None,next=None):
+        self.k,self.v,=k,v
+        self.prev,self.next=prev,next
 
 class DLL:
     def __init__(self):
-        head,tail=Node(),Node()
-        head.next,tail.prev=tail,head
-        self.head,self.tail=head,tail
-
-    def pop(self,node):
-        prev,next=node.prev,node.next
-        prev.next,next.prev=next,prev
-        return node
-
-    def popleft(self):
-        return self.pop(self.head.next)
+        self.head,self.tail=Node(),Node()
+        self.head.next,self.tail.prev=self.tail,self.head
     
     def pushright(self,node):
-        tail=self.tail
-        prev,next=tail.prev,tail
+        prev,next=self.tail.prev,self.tail
         prev.next=next.prev=node
-        node.prev,node.next=prev,next
-
+        node.next,node.prev=next,prev
+    
+    def pop(self,node):
+        # if node==self.head or node==self.tail: raise Exception("DLL is empty, cannot pop")
+        prev,next=node.prev,node.next
+        prev.next,next.prev=next,prev
+        # node.next=node.prev=None
+        return node
+    
+    def popleft(self): return self.pop(self.head.next)
+    
 class LRUCache:
 
     def __init__(self, cap: int):
         self.cap=cap
         self.dll=DLL()
-        self.k2n={}
+        self.k2n=defaultdict(lambda : Node())
 
-    def get(self, key: int) -> int:
-        if key not in self.k2n: return -1
-        node=self.k2n[key]
+    def get(self, k: int) -> int:
+        if k not in self.k2n: return -1
+        node=self.k2n[k]
         node=self.dll.pop(node)
         self.dll.pushright(node)
-        return node.val
+        return node.v
 
-    def put(self, key: int, val: int) -> None:
-        if self.get(key)!=-1:
-            self.k2n[key].val=val;return
-
+    def put(self, k: int, v: int) -> None:
+        if self.get(k)!=-1:
+            self.k2n[k].v=v
+            return
         if self.cap==len(self.k2n):
-            node=self.dll.popleft()
-            del self.k2n[node.key]
-            del node
-            
-        node=Node(key,val)
-        self.k2n[key]=node
+            todel=self.dll.popleft()
+            del self.k2n[todel.k]
+            # del todel
+
+        node=Node(k,v)
+        self.k2n[k]=node
         self.dll.pushright(node)
 
 
@@ -57,3 +54,5 @@ class LRUCache:
 # obj = LRUCache(capacity)
 # param_1 = obj.get(key)
 # obj.put(key,value)
+
+

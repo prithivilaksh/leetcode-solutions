@@ -52,3 +52,35 @@ class RandomizedSet:
 # param_1 = obj.insert(val)
 # param_2 = obj.remove(val)
 # param_3 = obj.getRandom()
+
+
+class RandomizedSet:
+
+    def __init__(self):
+        self.v2i={}
+        self.arr=[]
+
+    def insert(self, val: int) -> bool:
+        if val in self.v2i: return False
+        self.v2i[val]=len(self.arr)
+        self.arr.append(val)
+        return True
+
+    def remove(self, val: int) -> bool:
+        if val not in self.v2i: return False
+        pos=self.v2i.pop(val)
+        val=self.arr.pop()
+        if pos<len(self.arr):
+            self.v2i[val]=pos
+            self.arr[pos]=val
+        return True
+
+    def getRandom(self) -> int: return random.choice(self.arr)
+        
+
+
+# Your RandomizedSet object will be instantiated and called as such:
+# obj = RandomizedSet()
+# param_1 = obj.insert(val)
+# param_2 = obj.remove(val)
+# param_3 = obj.getRandom()
