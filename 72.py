@@ -1,3 +1,19 @@
+class Solution:
+    def minDistance(self, a: str, b: str) -> int:
+        
+        m,n=len(a),len(b)
+
+        @cache
+        def dp(i,j):
+            if i==m: return n-j
+            if j==n: return m-i
+
+            if a[i]==b[j]: return dp(i+1,j+1)
+            return 1+min(dp(i+1,j),dp(i,j+1),dp(i+1,j+1))
+        
+        return dp(0,0)
+
+
 # class Solution:
 #     def minDistance(self, word1: str, word2: str) -> int:
         
@@ -12,17 +28,17 @@
         
 #         return helper(0,0)
 
-class Solution:
-    def minDistance(self, word1: str, word2: str) -> int:
+# class Solution:
+#     def minDistance(self, word1: str, word2: str) -> int:
         
-        m,n=len(word1),len(word2)
-        @cache
-        def helper(i,j):
-            if i==m or j==n: return max(m-i,n-j)
-            if word1[i]==word2[j]: return helper(i+1,j+1)
-            return 1+min(helper(i,j+1),helper(i+1,j),helper(i+1,j+1))
+#         m,n=len(word1),len(word2)
+#         @cache
+#         def helper(i,j):
+#             if i==m or j==n: return max(m-i,n-j)
+#             if word1[i]==word2[j]: return helper(i+1,j+1)
+#             return 1+min(helper(i,j+1),helper(i+1,j),helper(i+1,j+1))
         
-        return helper(0,0)
+#         return helper(0,0)
         
 
 

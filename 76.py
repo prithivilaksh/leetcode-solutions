@@ -86,6 +86,26 @@ class Solution:
         
         return res
 
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if len(t)>len(s): return ""
+        cnt=defaultdict(int)
+        for c in t:cnt[c]+=1
+
+        l,uniq=0,len(cnt)
+        b,ln=0,inf
+        for r,c in enumerate(s):
+            cnt[c]-=1
+            if cnt[c]==0: uniq-=1
+
+            while uniq==0: 
+                if r-l+1<ln: ln,b=r-l+1,l
+                cnt[s[l]]+=1
+                if cnt[s[l]]==1: uniq+=1
+                l+=1
+        
+        return s[b:b+ln] if ln!=inf else ""
+
 
 
 
