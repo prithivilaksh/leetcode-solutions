@@ -81,35 +81,35 @@
 #         return res
 
 
-class Solution:
-    def kthSmallestProduct(self, a: List[int], b: List[int], k: int) -> int:
+# class Solution:
+#     def kthSmallestProduct(self, a: List[int], b: List[int], k: int) -> int:
 
-        # idea/observation:
-        # count number of products <= given product and do binary search
-        # 1) x<0 and y<0 => prd>0. x=-5, prd=18, y=-3.xx, b=[-5,-4,|-3,-2,-1,0,1,2,3,4,5]
-        # 2) x<0 and y>0 => prd<0. x=-5, prd=-18, y=3.xx, b=[-5,-4,-3,-2,-1,0,1,2,3,|4,5]
-        # 3) x>0 and y<0 => prd<0. x=5, prd=-18, y=-3.xx, b=[-5,-4|,-3,-2,-1,0,1,2,3,4,5]
-        # 4) x>0 and y>0 => prd>0. x=5, prd=18, y=3.xx, b=[-5,-4,-3,-2,-1,0,1,2,3|,4,5]
+#         # idea/observation:
+#         # count number of products <= given product and do binary search
+#         # 1) x<0 and y<0 => prd>0. x=-5, prd=18, y=-3.xx, b=[-5,-4,|-3,-2,-1,0,1,2,3,4,5]
+#         # 2) x<0 and y>0 => prd<0. x=-5, prd=-18, y=3.xx, b=[-5,-4,-3,-2,-1,0,1,2,3,|4,5]
+#         # 3) x>0 and y<0 => prd<0. x=5, prd=-18, y=-3.xx, b=[-5,-4|,-3,-2,-1,0,1,2,3,4,5]
+#         # 4) x>0 and y>0 => prd>0. x=5, prd=18, y=3.xx, b=[-5,-4,-3,-2,-1,0,1,2,3|,4,5]
 
-        def cntle(p):
-            cnt=0
-            for x in a:
-                if x==0 and p>=0: y=10**10
-                elif x==0 and p<0: y=-10**10
-                else: y=p/x
+#         def cntle(p):
+#             cnt=0
+#             for x in a:
+#                 if x==0 and p>=0: y=10**10
+#                 elif x==0 and p<0: y=-10**10
+#                 else: y=p/x
 
-                if x>=0: cnt+=bisect_right(b,floor(y))
-                elif x<0: cnt+=len(b)-bisect_left(b,ceil(y))
+#                 if x>=0: cnt+=bisect_right(b,floor(y))
+#                 elif x<0: cnt+=len(b)-bisect_left(b,ceil(y))
 
-            return cnt
+#             return cnt
 
-        l,r,res=-10**10,10**10,None
-        while l<=r:
-            m=l+(r-l)//2
-            if cntle(m)>=k: res=m;r=m-1
-            else: l=m+1
+#         l,r,res=-10**10,10**10,None
+#         while l<=r:
+#             m=l+(r-l)//2
+#             if cntle(m)>=k: res=m;r=m-1
+#             else: l=m+1
         
-        return res
+#         return res
 
 # ## TLE
 # class Solution:
@@ -136,4 +136,45 @@ class Solution:
 #             if j-1>=0: add(i,j-1)
 
 #         return res
+
+
+
+class Solution:
+    def kthSmallestProduct(self, a: List[int], b: List[int], k: int) -> int:
+
+        # idea/observation:
+        # 1) for a given product p, find the number of products <=p
+        # 2) based on the number of products, do a binary search to find the p such that number of products ==k 
+        # 3) to find number of products<=p
+        #     b =[-100,-10,-1,0,1,10,100]
+        #     for x in a
+        #     if x<0
+        #         if p<0: y=[ceil(p/x) ....] eg x=-5 p=-25 y=5 6 ...
+        #         if p>0: y=[ceil(p/x)....] eg x=-5 p=25 y=-5 -4 -3 ...
+        #         if p==0: y=[0.....] eg x=-5 p=0 y=0 1 2 ....
+        #     if x>0
+        #         if p<0: y=[....floor(p/x)] eg x=5 p=-25 y=...-7 -6 -5
+        #         if p>0: y=[....floor(p/x)] eg x=5 p=25 y=... 3 4 5
+        #         if p==0: y=[....0] eg x=5 p=0 y=... -2 -1 0
+        #     if x==0
+        #         if p<0: None
+        #         if p>0: all of y
+        #         if p==0: all of y
+
+
+        def count(p):
+            cnt,n=0,len(b)
+            for x in a:
+                y=p/x if x!=0 else None
+                if x<0: cnt+=n-bisect_left(b,ceil(y))
+                elif x>0: cnt+=bisect_right(b,floor(y))
+                elif p>=0: cnt+=n
+            return cnt
+
+        l,r=-10**10,10**10
+        while l<r:
+            m=l+(r-l)//2
+            if count(m)>=k: r=m
+            else: l=m+1
+        return r
 
