@@ -54,25 +54,3 @@ class MaxStack:
         node=self.sl.pop()
         self.st.remove(node)
         return node.val
-
-
-
-# Your MaxStack object will be instantiated and called as such:
-# obj = MaxStack()
-# obj.push(x)
-# param_2 = obj.pop()
-# param_3 = obj.top()
-# param_4 = obj.peekMax()
-# param_5 = obj.popMax()
-
-if __name__=="__main__":
-    obj=MaxStack()
-    obj.push(5)
-    obj.push(1)
-    obj.push(5)
-    print(obj.top())
-    print(obj.peekMax())
-    print(obj.popMax())
-    print(obj.pop())
-    print(obj.top())
-    
