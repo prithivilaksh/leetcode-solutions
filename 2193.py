@@ -19,7 +19,7 @@ class Solution:
             n=len(s)
             if l==r: 
                 res+=n//2
-                s=s[1:n//2 +1]+s[n//2 +1:]
+                s=s[1:]
             else:
                 res+=n-1-r
                 s=s[1:r]+s[r+1:]
