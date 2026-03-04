@@ -14,19 +14,19 @@
 
 #         return helper(0,0)
 
-class Solution:
-    def numDistinct(self, s: str, t: str) -> int:
+# class Solution:
+#     def numDistinct(self, s: str, t: str) -> int:
         
-        m,n=len(s),len(t)
-        @cache
-        def helper(i,j):
-            if i==n or j==m or n-i>m-j: return int(i==n)
-            res=helper(i,j+1)
-            if t[i]==s[j]:
-                res+=helper(i+1,j+1)
-            return res
+#         m,n=len(s),len(t)
+#         @cache
+#         def helper(i,j):
+#             if i==n or j==m or n-i>m-j: return int(i==n)
+#             res=helper(i,j+1)
+#             if t[i]==s[j]:
+#                 res+=helper(i+1,j+1)
+#             return res
 
-        return helper(0,0)
+#         return helper(0,0)
 
 
 # class Solution:
@@ -44,4 +44,50 @@ class Solution:
 
 #         return dp[0][0]
             
+
+# class Solution:
+#     def numDistinct(self, s: str, t: str) -> int:
+
+#         m,n=len(s),len(t)
+
+#         @cache
+#         def dp(i,j):
+#             if j==n: return 1
+#             if m-i<n-j or i==m: return 0
+
+#             res=0
+#             if i<m and s[i]==t[j]: res+=dp(i+1,j+1)
+#             res+=dp(i+1,j)
+
+#             return res
+        
+#         return dp(0,0)
+
+
+
+
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+
+        m,n=len(s),len(t)
+        @cache
+        def dp(i,j):
+            if j==n: return 1
+            if m-i<n-j: return 0
+            res=dp(i+1,j)
+            if s[i]==t[j]: res+=dp(i+1,j+1)
+            return res
+        
+        return dp(0,0)
+
+
+
+
+
+
+
+
+
+
+
 
