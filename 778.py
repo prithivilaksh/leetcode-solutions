@@ -64,15 +64,50 @@
 #             else: l=m+1
 #         return r
 
+# class Solution:
+#     def swimInWater(self, grid: List[List[int]]) -> int:
+#         n=len(grid)
+#         h=[(grid[0][0],0,0)];grid[0][0]=-1
+#         while h:
+#             ele,i,j=heappop(h)
+#             if i==j==n-1: return ele
+#             for di,dj in ((i+1,j),(i-1,j),(i,j+1),(i,j-1)):
+#                 if 0<=di<n and 0<=dj<n and grid[di][dj]!=-1:
+#                     heappush(h,(max(ele,grid[di][dj]),di,dj))
+#                     grid[di][dj]=-1
+#         return -1
+
+
+# class Solution:
+#     def swimInWater(self, grid: List[List[int]]) -> int:
+        
+#         n=len(grid)
+#         h=[(grid[0][0],0,0)]
+
+#         while True:
+#             t,i,j=heappop(h)
+#             if i==n-1==j: return t
+#             if grid[i][j]==-1: continue
+
+#             for di,dj in ((0,1),(1,0),(-1,0),(0,-1)):
+#                 vi,vj=i+di,j+dj
+#                 if 0<=vi<n and 0<=vj<n and grid[vi][vj]!=-1:
+#                     heappush(h,(max(t,grid[vi][vj]),vi,vj))
+
+#             grid[i][j]=-1
+
 class Solution:
     def swimInWater(self, grid: List[List[int]]) -> int:
+        
         n=len(grid)
         h=[(grid[0][0],0,0)];grid[0][0]=-1
-        while h:
-            ele,i,j=heappop(h)
-            if i==j==n-1: return ele
-            for di,dj in ((i+1,j),(i-1,j),(i,j+1),(i,j-1)):
-                if 0<=di<n and 0<=dj<n and grid[di][dj]!=-1:
-                    heappush(h,(max(ele,grid[di][dj]),di,dj))
-                    grid[di][dj]=-1
-        return -1
+
+        while True:
+            t,i,j=heappop(h)
+            if i==n-1==j: return t
+
+            for di,dj in ((0,1),(1,0),(-1,0),(0,-1)):
+                vi,vj=i+di,j+dj
+                if 0<=vi<n and 0<=vj<n and grid[vi][vj]!=-1:
+                    heappush(h,(max(t,grid[vi][vj]),vi,vj)) # the first path is the best path because t is always minimum and grid[vi][vj] is constant
+                    grid[vi][vj]=-1
