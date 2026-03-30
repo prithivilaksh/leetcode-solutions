@@ -51,17 +51,40 @@
 # param_1 = obj.pickIndex()
 
 
+# class Solution:
+
+#     # idea/observation
+#     # 1) w=[1,3,5]. out of sum(w) times, ith index should be returned w[i] times
+#     def __init__(self, w: List[int]):
+#         w[0]-=1
+#         for i in range(1,len(w)): w[i]+=w[i-1]
+#         self.w=w
+
+#     def pickIndex(self) -> int:
+#         x=random.randint(0,self.w[-1])
+#         return bisect_left(self.w,x)
+
+
 class Solution:
 
-    # idea/observation
-    # 1) w=[1,3,5]. out of sum(w) times, ith index should be returned w[i] times
     def __init__(self, w: List[int]):
-        w[0]-=1
         for i in range(1,len(w)): w[i]+=w[i-1]
-        self.w=w
+        self.p=w
 
     def pickIndex(self) -> int:
-        x=random.randint(0,self.w[-1])
-        return bisect_left(self.w,x)
+        i=random.randint(1,self.p[-1])
+        return bisect_left(self.p,i)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
