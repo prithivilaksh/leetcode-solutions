@@ -1,6 +1,6 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        m,n,mins,cnt=len(grid),len(grid[0]),-1,0
+        m,n,mins,cnt=len(grid),len(grid[0]),0,0
         dq=deque([])
         for i in range(m):
             for j in range(n):
@@ -16,4 +16,4 @@ class Solution:
                         dq.append((x,y))
             mins+=1
         
-        return max(0,mins) if cnt==0 else -1
+        return max(0,mins-1) if cnt==0 else -1

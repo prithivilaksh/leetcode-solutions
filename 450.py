@@ -98,6 +98,29 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+# class Solution:
+#     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+
+#         def delete(node):
+#             if not node: return None
+#             if key<node.val: node.left=delete(node.left)
+#             elif node.val<key: node.right=delete(node.right)
+#             else: 
+#                 if not node.left: return node.right
+#                 if not node.right: return node.left
+
+#                 newroot=node.left
+#                 tobeins=newroot.right
+#                 newroot.right=it=node.right
+#                 while it.left: it=it.left
+#                 it.left=tobeins
+#                 return newroot
+
+#             return node
+        
+#         return delete(root)
+
+
 class Solution:
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
 
@@ -108,12 +131,10 @@ class Solution:
             else: 
                 if not node.left: return node.right
                 if not node.right: return node.left
-
-                newroot=node.left
-                tobeins=newroot.right
-                newroot.right=it=node.right
-                while it.left: it=it.left
-                it.left=tobeins
+                newroot=it=node.left
+                tobeins=node.right
+                while it.right: it=it.right
+                it.right=tobeins
                 return newroot
 
             return node
