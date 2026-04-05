@@ -52,26 +52,52 @@
 #             res-=min(cnt1,cnt2)
 #         return res
 
-class Solution:
-    def candy(self, ratings: List[int]) -> int:
-        if len(ratings) == 1: return 1
-        i,candy,n=1,1,len(ratings)
-        while (i < n):
-            up = down = 0
-            while i < n and ratings[i - 1] == ratings[i]:
-                candy += 1
-                i += 1
-            while i < n and ratings[i - 1] < ratings[i]:
-                up += 1
-                candy += up + 1
-                i += 1
-            while i < n and ratings[i - 1] > ratings[i]:
-                down += 1
-                candy += down + 1
-                i += 1
-            candy -= min(up, down)
-        return candy
+# class Solution:
+#     def candy(self, rat: List[int]) -> int:
+        
+#         n=len(rat)
+#         indeg=defaultdict(int)
+#         g=defaultdict(list)
+#         for i in range(n-1):
+#             u,v=i,i+1
+#             if rat[u]>rat[v]: 
+#                 g[v].append(u)
+#                 indeg[u]+=1
+#             elif rat[v]>rat[u]: 
+#                 g[u].append(v)
+#                 indeg[v]+=1
+        
+#         dq,d,res=deque([i for i in range(n) if indeg[i]==0]),1,0
+#         while dq:
+#             res+=len(dq)*d
+#             for _ in range(len(dq)):
+#                 u=dq.popleft()
+#                 for v in g[u]:
+#                     indeg[v]-=1
+#                     if indeg[v]==0: dq.append(v)
+#             d+=1
+        
+#         return res
 
+
+class Solution:
+    def candy(self, rat: List[int]) -> int:
+        
+        n=len(rat)
+        i,res=1,n
+        while i<n:
+            while i<n and rat[i-1]==rat[i]: i+=1
+            upcnt=downcnt=0
+            while i<n and rat[i-1]<rat[i]: 
+                i+=1
+                upcnt+=1
+                res+=upcnt
+            while i<n and rat[i-1]>rat[i]:
+                i+=1
+                downcnt+=1
+                res+=downcnt
+            res-=min(upcnt,downcnt)
+        return res
 
 
 
