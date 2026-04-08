@@ -12,6 +12,7 @@
 #             pos=bisect_left(indlist,pos)
 #             return -1 if pos==len(indlist) else indlist[pos]
         
+#         @cache
 #         def isSubSeq(word):
 #             pos=-1
 #             for c in word:
@@ -33,11 +34,36 @@
         
 #         return sum(isSubSeq(word) for word in words)
 
+# class Solution:
+
+#     def numMatchingSubseq(self, S, words):
+#         waiting = defaultdict(list, {' ': map(iter, words)})
+#         for c in ' ' + S:
+#             for it in waiting.pop(c,()):
+#                 waiting[next(it, None)].append(it)
+#         return len(waiting[None])
+
+
 class Solution:
 
-    def numMatchingSubseq(self, S, words):
-        waiting = defaultdict(list, {' ': map(iter, words)})
-        for c in ' ' + S:
-            for it in waiting.pop(c,()):
-                waiting[next(it, None)].append(it)
-        return len(waiting[None])
+    def numMatchingSubseq(self, s, words):
+        
+        waiting=defaultdict(list,{' ': [iter(w) for w in words]})
+        for c in ' '+s:
+            for it in waiting.pop(c,[]):
+                waiting[next(it,"#")].append(it)
+        return len(waiting["#"])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
