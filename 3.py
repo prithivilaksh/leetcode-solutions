@@ -39,3 +39,29 @@ class Solution:
         return res
 
 
+# class Solution:
+#     def lengthOfLongestSubstring(self, s: str) -> int:
+        
+#         cnt=defaultdict(int)
+#         res=l=0
+#         for r,c in enumerate(s):
+#             cnt[c]+=1
+#             while cnt[c]>1:
+#                 cnt[s[l]]-=1
+#                 l+=1
+#             res=max(res,r-l+1)
+#         return res
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        
+        cnt=defaultdict(int)
+        res=l=more=0
+        r=-1
+        for r,c in enumerate(s):
+            cnt[c]+=1
+            if cnt[c]==2: more+=1
+            if more>=1:
+                if cnt[s[l]]==2: more-=1
+                cnt[s[l]]-=1
+                l+=1
+        return r-l+1

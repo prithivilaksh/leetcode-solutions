@@ -45,30 +45,58 @@
 #         return res
 
 
-class Solution:
-    def countPalindromePaths(self, parent: list[int], s: str) -> int:
-        n = len(parent)
-        adj = [[] for _ in range(n)]
-        for i in range(1, n):
-            adj[parent[i]].append(i)
+# class Solution:
+#     def countPalindromePaths(self, parent: list[int], s: str) -> int:
+#         n = len(parent)
+#         adj = [[] for _ in range(n)]
+#         for i in range(1, n):
+#             adj[parent[i]].append(i)
             
-        count_map = defaultdict(int)
-        stack = [(0, 0)]
+#         count_map = defaultdict(int)
+#         stack = [(0, 0)]
         
-        while stack:
-            u, m = stack.pop()
-            count_map[m]+=1
-            for v in adj[u]:
-                char_bit = 1 << (ord(s[v]) - ord('a'))
-                stack.append((v, m ^ char_bit))
+#         while stack:
+#             u, m = stack.pop()
+#             count_map[m]+=1
+#             for v in adj[u]:
+#                 char_bit = 1 << (ord(s[v]) - ord('a'))
+#                 stack.append((v, m ^ char_bit))
         
-        total_pairs = 0
+#         total_pairs = 0
         
-        for mask, freq in count_map.items():
-            total_pairs += freq * (freq - 1)
+#         for mask, freq in count_map.items():
+#             total_pairs += freq * (freq - 1)
+#             for i in range(26):
+#                 target = mask ^ (1 << i)
+#                 if target in count_map:
+#                     total_pairs += freq * count_map[target]
+        
+#         return total_pairs//2
+
+
+class Solution:
+    def countPalindromePaths(self, par: List[int], s: str) -> int:
+        
+        @cache
+        def mask(u):
+            if u==-1: return 0
+            parmask=mask(par[u])
+            indu=ord(s[u])-ord('a')
+            currmask=parmask^(1<<indu)
+            cnt[currmask]+=1
+            return currmask
+        
+        cnt=defaultdict(int)
+        n,res=len(par),0
+        for i in range(n): mask(i)
+
+        for mask,c in cnt.items():
+            res+=c*(c-1)
             for i in range(26):
-                target = mask ^ (1 << i)
-                if target in count_map:
-                    total_pairs += freq * count_map[target]
-        
-        return total_pairs//2
+                candmask=mask^(1<<i)
+                if candmask not in cnt: continue
+                res+=c*cnt[candmask]
+        return res//2 # we are double counting
+
+
+
