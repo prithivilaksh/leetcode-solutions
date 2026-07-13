@@ -78,6 +78,54 @@
 #         return dummy.next
 
 
+# # Definition for singly-linked list.
+# # class ListNode:
+# #     def __init__(self, val=0, next=None):
+# #         self.val = val
+# #         self.next = next
+# class Solution:
+#     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        
+#         dummy=ListNode(0)
+#         it,s=dummy,0
+#         while l1 or l2 or s:
+#             if l1: s+=l1.val;l1=l1.next
+#             if l2: s+=l2.val;l2=l2.next
+#             it.next=ListNode(s%10)
+#             s=s//10
+#             it=it.next
+
+#         return dummy.next
+
+
+# # Definition for singly-linked list.
+# # class ListNode:
+# #     def __init__(self, val=0, next=None):
+# #         self.val = val
+# #         self.next = next
+# class Solution:
+#     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        
+#         beforehead=ListNode(0)
+#         t1,t2,it,c=l1,l2,beforehead,0
+
+#         while t1 or t2 or c:
+#             a=b=0
+#             if t1:
+#                 a=t1.val
+#                 t1=t1.next
+#             if t2:
+#                 b=t2.val
+#                 t2=t2.next
+#             s=a+b+c
+#             c,s=s//10,s%10
+
+#             it.next=ListNode(s)
+#             it=it.next
+        
+#         return beforehead.next
+
+
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -86,13 +134,15 @@
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         
-        dummy=ListNode(0)
-        it,s=dummy,0
-        while l1 or l2 or s:
-            if l1: s+=l1.val;l1=l1.next
-            if l2: s+=l2.val;l2=l2.next
-            it.next=ListNode(s%10)
-            s=s//10
-            it=it.next
+        beforehead=ListNode(0)
+        t1,t2,it,s=l1,l2,beforehead,0
 
-        return dummy.next
+        while t1 or t2 or s:
+            if t1: s+=t1.val;t1=t1.next
+            if t2: s+=t2.val;t2=t2.next
+
+            it.next=ListNode(s%10)
+            s//=10
+            it=it.next
+        
+        return beforehead.next

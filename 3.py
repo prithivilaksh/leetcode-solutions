@@ -65,3 +65,15 @@ class Solution:
                 cnt[s[l]]-=1
                 l+=1
         return r-l+1
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        
+        last=defaultdict(lambda:-1)
+        res,l=0,-1
+        for r,x in enumerate(s):
+            l=max(l,last[x])
+            res=max(res,r-l)
+            last[x]=r
+        return res
