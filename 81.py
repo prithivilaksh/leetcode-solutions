@@ -89,3 +89,54 @@ class Solution:
                 else: l=m+1
 
         return False
+
+
+# class Solution:
+#     def search(self, nums: List[int], target: int) -> bool:
+        
+#     #           ____
+#     #      ____/
+#     # ____/                          ____
+#     #                           ____/
+#     #                      ____/
+
+#         l,r=0,len(nums)-1
+
+#         while l<=r:
+#             m=l+(r-l)//2
+#             if nums[m]==target: return True
+#             if nums[r]==nums[m]: r-=1;continue
+#             if nums[m]<target:
+#                 if target<=nums[r] or nums[r]<nums[m]:l=m+1
+#                 else: r=m-1
+#             else: #nums[m]>target
+#                 if nums[m]<nums[r] or nums[r]<target: r=m-1
+#                 else: l=m+1
+        
+#         return False
+
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> bool:
+        
+    #           ____
+    #      ____/
+    # ____/                          ____
+    #                           ____/
+    #                      ____/
+
+        l,r=0,len(nums)-1
+        while l<=r:
+            m=l+(r-l)//2
+            if nums[m]==target: return True
+            
+            if nums[m]==nums[r]: r-=1
+            elif nums[m]<nums[r]:
+                if target<nums[m] or target>nums[r]: r=m-1
+                else: l=m+1
+            else: #nums[m]>nums[r]
+                if target<=nums[r] or nums[m]<target: l=m+1
+                else: r=m-1
+
+        
+        return False
