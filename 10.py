@@ -167,6 +167,17 @@ class Solution:
 
 
 
-
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        
+        @cache
+        def dp(i,j):
+            if j==-1: return i==-1
+            if i>=0 and (p[j]=='.' or s[i]==p[j]): return dp(i-1,j-1)
+            if p[j]=='*':
+                return dp(i,j-2) or (i>=0 and (p[j-1]==s[i] or p[j-1]=='.') and dp(i-1,j))
+            return False
+        
+        return dp(len(s)-1,len(p)-1)
 
 
